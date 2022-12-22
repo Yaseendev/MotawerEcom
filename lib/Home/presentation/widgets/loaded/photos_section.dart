@@ -46,7 +46,7 @@ class _PhotosSectionState extends State<PhotosSection> {
               }),
         ),
       ),
-      SizedBox(height: 5),
+      SizedBox(height: 2),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: imgList.asMap().entries.map((entry) {
