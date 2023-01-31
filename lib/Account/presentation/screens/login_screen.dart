@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:sizer/sizer.dart';
 import '../widgets/login_button.dart';
+import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -134,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                       matchStyle:
                           TextStyle(color: Theme.of(context).primaryColor),
-                      onTap: (_, text) => print('Tapped'),
+                      onTap: (_, text) => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>SignupScreen())),
                     ),
                   ],
                 )

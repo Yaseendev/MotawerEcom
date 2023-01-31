@@ -17,3 +17,9 @@ class AppColors {
     900: PRIMARY_COLOR,
   });
 }
+
+class Urls {                    //<Your_ip_address>
+  static const String DOMAIN = 'http://192.168.100.57:3000';
+  static const String BASE_API = DOMAIN + '/api';
+  static const String SIGNUP_API = DOMAIN + '/signup';
+}

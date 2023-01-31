@@ -6,3 +6,17 @@ abstract class AccountEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SingUpEvent extends AccountEvent {
+  final String email;
+  final String name;
+  final String password;
+  SingUpEvent({
+    required this.email,
+    required this.name,
+    required this.password,
+  });
+
+  @override
+  List<Object> get props => [email, name, password];
+}
