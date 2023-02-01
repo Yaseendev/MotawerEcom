@@ -14,12 +14,32 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         locator.get<AccoountRepository>();
     on<SingUpEvent>((event, emit) async {
       if (await connectivity.checkConnectivity() != ConnectivityResult.none) {
+        emit(AccountLoading());
         await accoountRepository
             .signupUser(event.name, event.email, event.password)
-            .then((value) => emit(AccountLoggedIn()))
+            .then((value) => value.fold(
+                (left) => emit(AccountError(left.message)),
+                (right) => emit(AccountLoggedIn())))
             .onError((error, stackTrace) {
           print(error);
-          //emit(AccountError(accoountRepository));
+          emit(AccountError(error.toString()));
+        });
+      } else {
+        emit(AccountNoInternet());
+      }
+    });
+
+    on<SingInEvent>((event, emit) async {
+      if (await connectivity.checkConnectivity() != ConnectivityResult.none) {
+        emit(AccountLoading());
+        await accoountRepository
+            .signinUser( event.email, event.password)
+            .then((value) => value.fold(
+                (left) => emit(AccountError(left.message)),
+                (right) => emit(AccountLoggedIn())))
+            .onError((error, stackTrace) {
+          print(error);
+          emit(AccountError(error.toString()));
         });
       } else {
         emit(AccountNoInternet());

@@ -1,4 +1,6 @@
-import 'package:ecommerce/Utils/services/api_service.dart';
+import 'package:dartz/dartz.dart';
+import 'package:ecommerce/Account/data/models/user.dart';
+import 'package:ecommerce/Shared/models/network_failure.dart';
 import 'package:ecommerce/Utils/services/database_service.dart';
 
 import '../providers/account_network_provider.dart';
@@ -21,9 +23,26 @@ class AccoountRepository {
     return true; //FIXME await _ApiService.tokenVerify(token);
   }
 
-  Future signupUser(String name, String email, String password) async {
-    await _apiService.signup(name, email, password);
+  Future<Either<Failure, User>> signupUser(
+      String name, String email, String password) async {
+    try {
+      final result = await _apiService.signup(name, email, password);
+      return Right(User.fromMap(result));
+    } catch (e) {
+      return Left(Failure(_apiService.getErrorMsg(e)));
+    }
+    
   }
 
-  // String getErrorMessage() =>
+  Future<Either<Failure, User>> signinUser(
+      String email, String password) async {
+    try {
+      final result = await _apiService.signin( email, password);
+      return Right(User.fromMap(result));
+    } catch (e) {
+      return Left(Failure(_apiService.getErrorMsg(e)));
+    }
+    
+  }
+
 }

@@ -10,5 +10,5 @@ abstract class ApiService {
     ));
   }
 
-  String getErrorMsg(Response response);
+  String getErrorMsg(Object error);
 }

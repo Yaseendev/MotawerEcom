@@ -20,3 +20,16 @@ class SingUpEvent extends AccountEvent {
   @override
   List<Object> get props => [email, name, password];
 }
+
+class SingInEvent extends AccountEvent {
+  final String email;
+  final String password;
+
+  SingInEvent({
+    required this.email,
+    required this.password,
+  });
+
+  @override
+  List<Object> get props => [email, password];
+}

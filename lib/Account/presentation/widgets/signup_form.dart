@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 
-import 'login_button.dart';
+import 'account_button.dart';
 
 class SingupForm extends StatefulWidget {
   const SingupForm({super.key});
@@ -27,8 +27,8 @@ class _SingupFormState extends State<SingupForm> {
         children: [
           TextFormField(
             decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100)),
               hintText: 'Name',
               prefixIcon: Icon(Icons.person_outline_rounded),
             ),
@@ -43,8 +43,8 @@ class _SingupFormState extends State<SingupForm> {
           SizedBox(height: 20),
           TextFormField(
             decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100)),
               hintText: 'E-mail',
               prefixIcon: Icon(Icons.email_outlined),
             ),
@@ -62,8 +62,8 @@ class _SingupFormState extends State<SingupForm> {
           SizedBox(height: 20),
           TextFormField(
             decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100)),
               hintText: 'Password',
               labelText: 'Password',
               prefixIcon: Icon(Icons.password),
@@ -96,8 +96,8 @@ class _SingupFormState extends State<SingupForm> {
           SizedBox(height: 20),
           TextFormField(
             decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100)),
               hintText: 'Confirm Password',
               labelText: 'Confirm Password',
               prefixIcon: const Icon(Icons.password),
@@ -127,13 +127,15 @@ class _SingupFormState extends State<SingupForm> {
             },
           ),
           SizedBox(height: 20),
-          LoginButton(
+          AccountButton(
+            label: 'Sign Up',
             onPress: () {
-              context.read<AccountBloc>().add(SingUpEvent(
-                    email: 'asd',
-                    name: 'yy',
-                    password: '12345678',
-                  ));
+              if (_formKey.currentState!.validate())
+                context.read<AccountBloc>().add(SingUpEvent(
+                      email: email,
+                      name: name,
+                      password: password,
+                    ));
             },
           ),
         ],
