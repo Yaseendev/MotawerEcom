@@ -20,7 +20,7 @@ class AccoountRepository {
   Future<bool?> tokenCheck() async {
     final String? token = await _databaseService.getToken();
     if (token == null) return null;
-    return true; //FIXME await _ApiService.tokenVerify(token);
+    return await _apiService.tokenCheck(token);
   }
 
   Future<Either<Failure, User>> signupUser(
@@ -31,18 +31,26 @@ class AccoountRepository {
     } catch (e) {
       return Left(Failure(_apiService.getErrorMsg(e)));
     }
-    
   }
 
   Future<Either<Failure, User>> signinUser(
       String email, String password) async {
     try {
-      final result = await _apiService.signin( email, password);
+      final result = await _apiService.signin(email, password);
+      await _databaseService.setToken(result['token']);
       return Right(User.fromMap(result));
     } catch (e) {
       return Left(Failure(_apiService.getErrorMsg(e)));
     }
-    
   }
 
+  Future<Either<Failure, User>> getUserData() async {
+    try {
+      final String? token = await _databaseService.getToken();
+      final result = await _apiService.fetchUserData(token ?? '');
+      return Right(User.fromMap(result));
+    } catch (e) {
+      return Left(Failure(_apiService.getErrorMsg(e)));
+    }
+  }
 }

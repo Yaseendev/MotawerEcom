@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
 class SearchBox extends StatefulWidget {
@@ -43,11 +44,31 @@ class _SearchBoxState extends State<SearchBox> {
           ),
         ),
         SizedBox(width: 8),
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.shopping_cart_rounded),
-          color: Theme.of(context).primaryColor,
-          iconSize: 30,
+        Badge(
+          badgeStyle: BadgeStyle(
+            padding: EdgeInsets.all(5),
+            badgeColor: Theme.of(context).primaryColor,
+          ),
+          badgeContent: Text(
+            '2',
+            //state.fold(0, (previousValue, element) => (previousValue as int) + element.quantity).toString(),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          showBadge: true, //state.isNotEmpty,
+          position: BadgePosition.topEnd(
+            end: -5,
+            // top: 5,
+          ),
+          child: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.shopping_cart_rounded),
+            color: Theme.of(context).primaryColor,
+            iconSize: 30,
+          ),
         ),
         // SizedBox(
         //   height: 48,

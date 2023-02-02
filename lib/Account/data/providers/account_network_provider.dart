@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:ecommerce/Utils/constants.dart';
 import 'package:ecommerce/Utils/services/api_service.dart';
@@ -25,6 +24,30 @@ class AccountNetworkProvider extends ApiService {
         'email': email,
         'password': password,
       },
+    );
+    return response.data;
+  }
+
+  Future<bool> tokenCheck(String token) async {
+    final Response response = await dio.post(
+      Urls.TOKEN_API,
+      options: Options(
+        headers: <String, String>{
+          'x-auth-token': token,
+        },
+      ),
+    );
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> fetchUserData(String token) async {
+    final Response response = await dio.get(
+      '${Urls.BASE_API}/',
+      options: Options(
+        headers: <String, String>{
+          'x-auth-token': token,
+        },
+      ),
     );
     return response.data;
   }
@@ -96,10 +119,10 @@ class AccountNetworkProvider extends ApiService {
                     }
                     break;
                   case 500:
-                  try {
+                    try {
                       networkException = error.response!.data['error'];
                     } catch (e) {
-                    networkException = 'Internal Server Error';
+                      networkException = 'Internal Server Error';
                     }
                     break;
                   case 503:

@@ -23,4 +23,5 @@ class Urls {                    //<Your_ip_address>
   static const String BASE_API = DOMAIN + '/api';
   static const String SIGNUP_API = BASE_API + '/signup';
   static const String SIGNIN_API = BASE_API + '/signin';
+  static const String TOKEN_API = BASE_API + '/tokencheck';
 }

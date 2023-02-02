@@ -18,6 +18,8 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
     _pages.addAll([
       const HomeScreen(),
       Container(),
+      Container(),
+      Container(),
     ]);
     super.initState();
   }
@@ -34,17 +36,28 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
         type: FancyType.FancyV1,
         items: [
           FancyItem(
-            textColor: Colors.orange,
+            textColor: Theme.of(context).primaryColor,
             title: 'Home',
             icon: Icon(Icons.home),
           ),
           FancyItem(
-            textColor: Colors.red,
-            title: 'Trending',
-            icon: Icon(Icons.trending_up),
+            textColor: Theme.of(context).primaryColor,
+            title: 'Favorite',
+            icon: Icon(Icons.favorite_rounded),
+          ),
+          FancyItem(
+            textColor: Theme.of(context).primaryColor,
+            title: 'Search',
+            icon: Icon(Icons.search),
+          ),
+          FancyItem(
+            textColor: Theme.of(context).primaryColor,
+            title: 'Account',
+            icon: Icon(Icons.person),
           ),
         ],
         onItemSelected: (index) {
+          goToPage(index);
           print(index);
         },
       ),

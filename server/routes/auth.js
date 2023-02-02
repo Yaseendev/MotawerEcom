@@ -44,4 +44,27 @@ authRouter.post("/api/signin", async (req, res) => {
     }
    
 });
+
+///Token verify Api
+authRouter.post("/tokencheck", async (req, res) => {
+    try {
+        const token = req.header('x-auth-token');
+        if(!token) return res.json(false);
+        const verified = jwt.verify(token, "passwordKey");
+        if(!verified) return res.json(false);
+
+        const user = await User.findById(verified.id);
+        if(!user) return res.json(false);
+        return res.json(true);
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+});
+
+/// Get User Data
+authRouter.get('/', auth, async (req, res) => {
+    const user = await User.findById(req.user);
+    res.json({...user._doc, token: req.token});
+});
+
 module.exports = authRouter;

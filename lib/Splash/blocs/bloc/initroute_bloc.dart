@@ -15,7 +15,7 @@ class InitrouteBloc extends Bloc<InitrouteEvent, InitrouteState> {
     on<InitrouteEvent>((event, emit) async {
       final connStatus = await connectivity.checkConnectivity();
       if (event is UserCheckEvent) {
-        //if (connStatus != ConnectivityResult.none) {
+        if (connStatus != ConnectivityResult.none) {
           await accoountRepository.tokenCheck().then((value) {
             if (value == null) {
               emit(InitrouteNoToken());
@@ -29,8 +29,8 @@ class InitrouteBloc extends Bloc<InitrouteEvent, InitrouteState> {
           }).onError((error, stackTrace) {
             emit(InitrouteError());
           });
-        // } else
-        //   emit(InitrouteNoInternet());
+        } else
+          emit(InitrouteNoInternet());
       }
     });
   }
