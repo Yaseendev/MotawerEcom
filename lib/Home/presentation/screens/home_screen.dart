@@ -12,15 +12,21 @@ class HomeScreen extends StatelessWidget {
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 5)).then((value) => false);
         },
-        child: ListView(
-          
-          //crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //HomeLoadingWidget(),
-            HomeLoadedWidget(),
-            SizedBox(height: 30),
-          ],
-        ),
+        child: SafeArea(
+            child: Padding(
+          padding: const EdgeInsets.only(top: 18.0),
+          child: HomeLoadedWidget(),
+        )),
+        //  ListView(
+        //   physics: NeverScrollableScrollPhysics(),
+        //   shrinkWrap: true,
+        //   //crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     //HomeLoadingWidget(),
+        //     HomeLoadedWidget(),
+        //     SizedBox(height: 30),
+        //   ],
+        // ),
       ),
     );
   }

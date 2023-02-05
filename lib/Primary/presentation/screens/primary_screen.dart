@@ -1,3 +1,4 @@
+import 'package:ecommerce/Account/presentation/screens/account_screen.dart';
 import 'package:fancy_bar/fancy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/Home/presentation/screens/home_screen.dart';
@@ -19,7 +20,7 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
       const HomeScreen(),
       Container(),
       Container(),
-      Container(),
+      const AccountScreen(),
     ]);
     super.initState();
   }
@@ -38,22 +39,22 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
           FancyItem(
             textColor: Theme.of(context).primaryColor,
             title: 'Home',
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
           ),
           FancyItem(
             textColor: Theme.of(context).primaryColor,
             title: 'Favorite',
-            icon: Icon(Icons.favorite_rounded),
+            icon: const Icon(Icons.favorite_rounded),
           ),
           FancyItem(
             textColor: Theme.of(context).primaryColor,
             title: 'Search',
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
           FancyItem(
             textColor: Theme.of(context).primaryColor,
             title: 'Account',
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
           ),
         ],
         onItemSelected: (index) {
