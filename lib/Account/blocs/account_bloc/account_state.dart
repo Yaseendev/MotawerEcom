@@ -10,7 +10,9 @@ class AccountInitial extends AccountState {
 }
 
 class AccountLoggedIn extends AccountState {
+final User user;
 
+  AccountLoggedIn(this.user);
 }
 
 class AccountError extends AccountState {

@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ecommerce/Account/data/providers/account_database_provider.dart';
 import 'package:ecommerce/Account/data/providers/account_network_provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -34,7 +35,8 @@ Future locatorsSetup() async {
   //       databaseService: database,
   //     ));
   locator.registerLazySingleton<AccountNetworkProvider>(() => AccountNetworkProvider());
+  locator.registerLazySingleton<AccountDatabase>(() => AccountDatabase(database.secureStorage));
   locator.registerLazySingleton<AccoountRepository>(() => AccoountRepository(
     apiService: locator.get<AccountNetworkProvider>(),
-    databaseService: database));
+    databaseService: locator.get<AccountDatabase>(),));
 }

@@ -3,6 +3,7 @@ const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authRouter = express.Router();
+const auth = require('../middleware/auth_middleware');
 
 ///Signup Api
 authRouter.post("/api/signup", async function (req, res) {
@@ -46,7 +47,7 @@ authRouter.post("/api/signin", async (req, res) => {
 });
 
 ///Token verify Api
-authRouter.post("/tokencheck", async (req, res) => {
+authRouter.post("/api/tokencheck", async (req, res) => {
     try {
         const token = req.header('x-auth-token');
         if(!token) return res.json(false);
@@ -62,7 +63,7 @@ authRouter.post("/tokencheck", async (req, res) => {
 });
 
 /// Get User Data
-authRouter.get('/', auth, async (req, res) => {
+authRouter.get('/api', auth, async (req, res) => {
     const user = await User.findById(req.user);
     res.json({...user._doc, token: req.token});
 });

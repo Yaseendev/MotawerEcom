@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:ecommerce/Account/data/models/user.dart';
 import 'package:ecommerce/Account/data/repositories/account_repo.dart';
 import 'package:ecommerce/Utils/locator.dart';
 import 'package:equatable/equatable.dart';
@@ -19,7 +20,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
             .signupUser(event.name, event.email, event.password)
             .then((value) => value.fold(
                 (left) => emit(AccountError(left.message)),
-                (right) => emit(AccountLoggedIn())))
+                (right) => emit(AccountLoggedIn(right))))
             .onError((error, stackTrace) {
           print(error);
           emit(AccountError(error.toString()));
@@ -33,10 +34,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       if (await connectivity.checkConnectivity() != ConnectivityResult.none) {
         emit(AccountLoading());
         await accoountRepository
-            .signinUser( event.email, event.password)
+            .signinUser(event.email, event.password)
             .then((value) => value.fold(
                 (left) => emit(AccountError(left.message)),
-                (right) => emit(AccountLoggedIn())))
+                (right) => emit(AccountLoggedIn(right))))
             .onError((error, stackTrace) {
           print(error);
           emit(AccountError(error.toString()));
@@ -44,6 +45,18 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
       } else {
         emit(AccountNoInternet());
       }
+    });
+
+    on<LoadUserProfileEvent>((event, emit) async {
+      await accoountRepository.getUserData().then((value) {
+        value.fold(
+          (left) => emit(AccountError(left.message)),
+          (right) => emit(AccountLoggedIn(right)),
+        );
+      }).onError((error, stackTrace) {
+        print('Error $error');
+        emit(AccountInitial());
+      });
     });
   }
 }

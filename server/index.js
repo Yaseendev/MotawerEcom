@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRouter = require('./routes/auth');
+const auth = require('./middleware/auth_middleware');
 
 const app = express();
 const PORT = 3000;

@@ -1,3 +1,4 @@
+import 'package:ecommerce/Account/blocs/account_bloc/account_bloc.dart';
 import 'package:ecommerce/Account/presentation/screens/login_screen.dart';
 import 'package:ecommerce/Primary/presentation/screens/primary_screen.dart';
 import 'package:ecommerce/Splash/blocs/bloc/initroute_bloc.dart';
@@ -16,12 +17,13 @@ class SplashScreen extends StatelessWidget {
         if (state is InitrouteNoToken) {
           print('Going home');
           Navigator.of(context).pushReplacement(MaterialPageRoute(
-              settings: RouteSettings(name: '/primary'),
+              settings: RouteSettings(name: '/login'),
               builder: (ctx) {
                 return LoginScreen();
               }));
         }
         if(state is InitrouteValidToken) {
+          context.read<AccountBloc>().add(LoadUserProfileEvent());
            Navigator.of(context).pushReplacement(MaterialPageRoute(
               settings: RouteSettings(name: '/primary'),
               builder: (ctx) {

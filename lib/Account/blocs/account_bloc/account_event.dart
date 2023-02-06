@@ -33,3 +33,8 @@ class SingInEvent extends AccountEvent {
   @override
   List<Object> get props => [email, password];
 }
+
+class LoadUserProfileEvent extends AccountEvent {
+  @override
+  List<Object> get props => [];
+}
