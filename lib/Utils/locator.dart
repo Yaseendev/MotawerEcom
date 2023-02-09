@@ -1,6 +1,10 @@
+import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ecommerce/Account/data/providers/account_database_provider.dart';
 import 'package:ecommerce/Account/data/providers/account_network_provider.dart';
+import 'package:ecommerce/Admin/data/providers/admin_network_provider.dart';
+import 'package:ecommerce/Admin/data/repositories/admin_repository.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -29,14 +33,16 @@ Future locatorsSetup() async {
   locator.registerLazySingleton<FlutterSecureStorage>(() => secureStorage);
   locator.registerLazySingleton<DatabaseService>(() => database);
   locator.registerLazySingleton<Connectivity>(() => Connectivity());
-  // locator.registerLazySingleton<ApiService>(() => apiService);
-  // locator.registerLazySingleton<AccoountRepository>(() => AccoountRepository(
-  //       ApiService: apiService,
-  //       databaseService: database,
-  //     ));
+  locator.registerLazySingleton<FilePicker>(() => FilePicker.platform);
+  locator.registerLazySingleton<CloudinaryPublic>(() => CloudinaryPublic('drm2gxx3r','mihbdymj'));
+  
   locator.registerLazySingleton<AccountNetworkProvider>(() => AccountNetworkProvider());
+  locator.registerLazySingleton<AdminNetworkProvider>(() => AdminNetworkProvider());
   locator.registerLazySingleton<AccountDatabase>(() => AccountDatabase(database.secureStorage));
   locator.registerLazySingleton<AccoountRepository>(() => AccoountRepository(
     apiService: locator.get<AccountNetworkProvider>(),
     databaseService: locator.get<AccountDatabase>(),));
+  locator.registerLazySingleton<AdminRepository>(() => AdminRepository(
+    accountDatabaseService: locator.get<AccountDatabase>(),
+    ));
 }

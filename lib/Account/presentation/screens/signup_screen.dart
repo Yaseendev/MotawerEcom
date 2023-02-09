@@ -1,5 +1,6 @@
 import 'package:custom_text/custom_text.dart';
 import 'package:ecommerce/Account/blocs/account_bloc/account_bloc.dart';
+import 'package:ecommerce/Admin/presentation/screens/admin_screen.dart';
 import 'package:ecommerce/Primary/presentation/screens/primary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,8 +39,10 @@ class _SignupScreenState extends State<SignupScreen> {
             duration: const Duration(seconds: 2),
           ));
         } else if (state is AccountLoggedIn) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => PrimaryScreen()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (_) => state.user.type == 'admin'
+                  ? AdminScreen()
+                  : PrimaryScreen()));
         }
       },
       child: Scaffold(

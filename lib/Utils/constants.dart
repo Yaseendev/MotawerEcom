@@ -26,6 +26,7 @@ class Urls {                    //<Your_ip_address>
   static const String SIGNUP_API = BASE_API + '/signup';
   static const String SIGNIN_API = BASE_API + '/signin';
   static const String TOKEN_API = BASE_API + '/tokencheck';
+  static const String ADD_PRODUCT = BASE_API + '/admin/add-product';
 }
 
 class Boxes {

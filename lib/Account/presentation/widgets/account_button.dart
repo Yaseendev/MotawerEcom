@@ -7,10 +7,12 @@ enum ButtonState { idle, loading }
 class AccountButton extends StatefulWidget {
   final VoidCallback onPress;
   final String label;
+ final ButtonState? buttonState;
   const AccountButton({
     Key? key,
     required this.onPress,
     required this.label,
+    this.buttonState,
   }) : super(key: key);
 
   @override
@@ -18,23 +20,28 @@ class AccountButton extends StatefulWidget {
 }
 
 class _AccountButtonState extends State<AccountButton> {
-  ButtonState buttonState = ButtonState.idle;
+  ButtonState? buttonState;
   bool isAnimating = true;
+
+  @override
+  void initState() {
+    buttonState = widget.buttonState ?? ButtonState.idle; 
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final isStretched = isAnimating || buttonState == ButtonState.idle;
     return BlocListener<AccountBloc, AccountState>(
       listener: (context, state) {
-        if(state is AccountLoading) {
-setState(() {
-                      buttonState = ButtonState.loading;
-                    });
-        }
-        else {
-setState(() {
-                      buttonState = ButtonState.idle;
-                    });
+        if (state is AccountLoading) {
+          setState(() {
+            buttonState = ButtonState.loading;
+          });
+        } else {
+          setState(() {
+            buttonState = ButtonState.idle;
+          });
         }
       },
       child: Container(
@@ -49,13 +56,13 @@ setState(() {
           child: isStretched
               ? ElevatedButton(
                   child: Text(
-                  widget.label.toUpperCase(),
+                    widget.label.toUpperCase(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                     ),
                   ),
-                  onPressed: () async {
+                  onPressed: () {
                     widget.onPress();
                   },
                   style: ButtonStyle(

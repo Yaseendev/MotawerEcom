@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 const auth = require('./middleware/auth_middleware');
 
 const app = express();
@@ -9,6 +10,7 @@ const DB = 'mongodb+srv://Yaseendev:Yaseendev123@cluster0.mih13oq.mongodb.net/?r
 
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
 
 //Connection to db
 mongoose.connect(DB).then(() => {
@@ -19,9 +21,4 @@ mongoose.connect(DB).then(() => {
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Connected to port ${PORT}`);
-});
-
-
-app.get("/test", (req, res) => {
-    res.json([{ user: 'tj' }, { user: 'tj' }]);
 });

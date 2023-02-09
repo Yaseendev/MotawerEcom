@@ -41,7 +41,7 @@ class User {
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       address: map['address'] ?? '',
-      type: map['type'] ?? '',
+      type: map['type'] ?? '',  
     );
   }
   String toJson() => json.encode(toMap());
