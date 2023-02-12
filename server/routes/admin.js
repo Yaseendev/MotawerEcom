@@ -32,4 +32,15 @@ adminRouter.get("/api/admin/get-products", adminMW, async (req, res) => {
     }
     });
 
+/// Delete a product
+adminRouter.post("/api/admin/delete-product", adminMW, async (req, res) => {
+    try {
+        const { id } = req.body;
+        let product = await Product.findByIdAndDelete(id);
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+    });
+
 module.exports = adminRouter;

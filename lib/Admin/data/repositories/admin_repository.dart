@@ -26,4 +26,26 @@ class AdminRepository {
       return Left(Failure(_apiService.getErrorMsg(e)));
     }
   }
+
+  Future<Either<Failure, List<Product>>> fetchProducts() async {
+    try {
+      final String? token = await _databaseService.getToken();
+      if (token == null) return Left(Failure('No Token'));
+      final result = await _apiService.getAllProducts(token);
+      return Right(result.map((e) => Product.fromMap(e)).toList());
+    } catch (e) {
+      return Left(Failure(_apiService.getErrorMsg(e)));
+    }
+  }
+
+  Future<Either<Failure, void>> deleteProduct(String productId) async {
+    try {
+      final String? token = await _databaseService.getToken();
+      if (token == null) return Left(Failure('No Token'));
+      await _apiService.deleteProduct(productId, token);
+      return Right(null);
+    } catch (e) {
+      return Left(Failure(_apiService.getErrorMsg(e)));
+    }
+  }
 }

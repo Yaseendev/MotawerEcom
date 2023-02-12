@@ -36,6 +36,33 @@ class AdminNetworkProvider extends ApiService {
     return response.data;
   }
 
+  Future<List<dynamic>> getAllProducts( String userToken) async {
+    final Response response = await dio.get(
+      Urls.GET_PRODUCT,
+      options: Options(
+        headers: {
+          'x-auth-token' : userToken,
+        },
+      ),
+    );
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> deleteProduct(String prodId, String userToken) async {
+    final Response response = await dio.post(
+      Urls.DELETE_PRODUCT,
+      options: Options(
+        headers: {
+          'x-auth-token' : userToken,
+        },
+      ),
+      data: {
+        'id' : prodId,
+      },
+    );
+    return response.data;
+  }
+
   @override
   String getErrorMsg(Object error) {
     if (error is Exception) {
