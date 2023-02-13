@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:ecommerce/Shared/presentation/sliver_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -7,7 +7,7 @@ import 'categories_section.dart';
 import 'deal_of_day_section.dart';
 import 'new_arrivals_scection.dart';
 import 'photos_section.dart';
-import 'search_box.dart';
+import '../../../../Search/presentation/widgets/search_box.dart';
 
 class HomeLoadedWidget extends StatelessWidget {
   const HomeLoadedWidget({
@@ -37,8 +37,8 @@ class HomeLoadedWidget extends StatelessWidget {
                 top: 4,
                 bottom: 14,
               ),
-              child: Badge(
-                badgeStyle: BadgeStyle(
+              child: badge.Badge(
+                badgeStyle: badge.BadgeStyle(
                   // padding: EdgeInsets.all(5),
                   badgeColor: Theme.of(context).primaryColor,
                 ),
@@ -52,7 +52,7 @@ class HomeLoadedWidget extends StatelessWidget {
                   ),
                 ),
                 showBadge: true, //state.isNotEmpty,
-                position: BadgePosition.topEnd(
+                position: badge.BadgePosition.topEnd(
                   end: -6,
                   // top: 5,
                 ),

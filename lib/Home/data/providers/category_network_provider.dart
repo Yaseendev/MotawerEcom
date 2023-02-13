@@ -1,63 +1,21 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Utils/constants.dart';
-import 'package:ecommerce/Utils/locator.dart';
 import 'package:ecommerce/Utils/services/api_service.dart';
-import 'package:cloudinary_public/cloudinary_public.dart';
+import 'dart:io';
 
-class AdminNetworkProvider extends ApiService {
-  late final CloudinaryPublic cloudinaryService;
+class CategoryNetworkProvider extends ApiService {
 
-  AdminNetworkProvider() : cloudinaryService = locator.get<CloudinaryPublic>();
-
-  Future<List<CloudinaryResponse>> uploadImages(
-      List<String> productImages, String productName) async {
-    return await cloudinaryService.uploadFiles(productImages
-        .map((path) => CloudinaryFile.fromFile(path, folder: productName))
-        .toList());
-  }
-
-  Future<Map<String, dynamic>> postProduct(
-      Product product, String userToken) async {
-    // Upload Images
-    final responses = await uploadImages(product.images, product.name);
-    product.images.replaceRange(
-        0, product.images.length, responses.map((res) => res.secureUrl));
-    final Response response = await dio.post(
-      Urls.ADD_PRODUCT,
-      options: Options(
-        headers: {
-          'x-auth-token' : userToken,
-        },
-      ),
-      data: product.toMap(),
-    );
-    return response.data;
-  }
-
-  Future<List<dynamic>> getAllProducts( String userToken) async {
+  Future<List<dynamic>> getAllProducts(
+    String userToken, String category) async {
     final Response response = await dio.get(
-      Urls.GET_PRODUCT,
+      Urls.GET_CATEGORY,
       options: Options(
         headers: {
-          'x-auth-token' : userToken,
+          'x-auth-token': userToken,
         },
       ),
-    );
-    return response.data;
-  }
-
-  Future<Map<String, dynamic>> deleteProduct(String prodId, String userToken) async {
-    final Response response = await dio.post(
-      Urls.DELETE_PRODUCT,
-      options: Options(
-        headers: {
-          'x-auth-token' : userToken,
-        },
-      ),
-      data: {
-        'id' : prodId,
+      queryParameters: {
+        'category': category,
       },
     );
     return response.data;

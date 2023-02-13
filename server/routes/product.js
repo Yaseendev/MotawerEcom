@@ -4,7 +4,7 @@ const auth = require('../middleware/auth_middleware');
 const Product = require('../models/product');
 
 /// Get All products
-adminRouter.get("/api/products", auth, async (req, res) => {
+productRouter.get("/api/products", auth, async (req, res) => {
     try {
         console.log(req.query.category);
         const products = await Product.find({category: req.query.category});

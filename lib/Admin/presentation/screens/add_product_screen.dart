@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:banner_carousel/banner_carousel.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:ecommerce/Admin/logic/product_bloc/product_bloc.dart';
-import 'package:ecommerce/Shared/models/product.dart';
+import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Shared/presentation/widgets/custom_button.dart';
 import 'package:ecommerce/Shared/presentation/widgets/custom_text_field.dart';
 import 'package:ecommerce/Utils/constants.dart';

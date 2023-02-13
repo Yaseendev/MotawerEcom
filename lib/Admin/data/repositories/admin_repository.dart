@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce/Account/data/providers/account_database_provider.dart';
 import 'package:ecommerce/Shared/models/network_failure.dart';
-import 'package:ecommerce/Shared/models/product.dart';
+import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Utils/locator.dart';
 import '../providers/admin_network_provider.dart';
 

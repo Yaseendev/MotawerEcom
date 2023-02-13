@@ -1,4 +1,6 @@
+import 'package:ecommerce/Home/presentation/logic/categeroy_bloc/category_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'caregory_home_card.dart';
 
 class CategoriesSection extends StatelessWidget {

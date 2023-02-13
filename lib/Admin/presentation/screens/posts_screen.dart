@@ -4,7 +4,7 @@ import 'package:ecommerce/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../widgets/product_card.dart';
+import '../widgets/product_admin_card.dart';
 import 'add_product_screen.dart';
 
 class PostsScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class PostsScreen extends StatelessWidget {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     itemBuilder: (context, index) {
-                      return ProductCard(product: state.products[index]);
+                      return ProductAdminCard(product: state.products[index]                      );
                     },
                   )
                 : Center(

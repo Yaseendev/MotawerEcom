@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ecommerce/Admin/data/repositories/admin_repository.dart';
-import 'package:ecommerce/Shared/models/product.dart';
+import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Utils/locator.dart';
 import 'package:equatable/equatable.dart';
 
@@ -18,11 +18,10 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         await adminRepository
             .fetchProducts()
             .then(
-              (value) => value.fold(
+                  (value) => value.fold(
                   (error) => emit(ProductsError(err: error.message)),
                   (result) => emit(ProductsFetched(products: result))),
-            )
-            .onError((error, stackTrace) {
+            ).onError((error, stackTrace) {
           print(error);
           emit(ProductsError(err: error.toString()));
         });

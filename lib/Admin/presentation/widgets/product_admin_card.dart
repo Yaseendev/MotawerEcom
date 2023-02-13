@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/Admin/logic/products_bloc/products_bloc.dart';
-import 'package:ecommerce/Shared/models/product.dart';
+import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductAdminCard extends StatelessWidget {
   final Product product;
-  const ProductCard({super.key, required this.product});
+  const ProductAdminCard({
+    super.key,
+    required this.product,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
+const productRouter = require('./routes/product');
 const auth = require('./middleware/auth_middleware');
 
 const app = express();
@@ -11,6 +12,7 @@ const DB = 'mongodb+srv://Yaseendev:Yaseendev123@cluster0.mih13oq.mongodb.net/?r
 app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter);
+app.use(productRouter);
 
 //Connection to db
 mongoose.connect(DB).then(() => {

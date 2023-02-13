@@ -9,6 +9,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
 import '../Account/data/repositories/account_repo.dart';
+import '../Home/data/providers/category_network_provider.dart';
+import '../Home/data/repositories/category_repository.dart';
 import 'services/database_service.dart';
 
 final locator = GetIt.instance;
@@ -45,4 +47,7 @@ Future locatorsSetup() async {
   locator.registerLazySingleton<AdminRepository>(() => AdminRepository(
     accountDatabaseService: locator.get<AccountDatabase>(),
     ));
+  locator.registerLazySingleton<CategoryNetworkProvider>(() => CategoryNetworkProvider());
+  locator.registerLazySingleton<CategoryRepository>(() => CategoryRepository());
+
 }
