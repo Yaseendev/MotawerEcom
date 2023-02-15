@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:flutter/material.dart';
-
 import '../screens/product_details_screen.dart';
 
 class ProductCard extends StatelessWidget {

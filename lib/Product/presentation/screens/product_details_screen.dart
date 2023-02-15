@@ -3,7 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../widgets/cart_buttons_section.dart';
 import '../widgets/description_section.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -89,21 +91,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       child: BannerCarousel.fullScreen(
                         animation: true,
                         height: MediaQuery.of(context).size.height * .34,
-                        activeColor: AppColors.PRIMARY_COLOR,
-                        //margin: EdgeInsets.zero,
+                        activeColor: widget.product.images.length <= 1
+                            ? Colors.transparent
+                            : AppColors.PRIMARY_COLOR,
                         customizedBanners: [
-                          ...widget.product.images.map((e) => Image.network(
-                                e,
-                                height: MediaQuery.of(context).size.height * .5,
-                                width: double.infinity,
-                                fit: BoxFit.fill,
-                              )),
-                          ...widget.product.images.map((e) => Image.network(
-                                e,
-                                height: MediaQuery.of(context).size.height * .5,
-                                width: double.infinity,
-                                fit: BoxFit.fill,
-                              )),
                           ...widget.product.images.map((e) => Image.network(
                                 e,
                                 height: MediaQuery.of(context).size.height * .5,
@@ -125,24 +116,42 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               DescriptionSection(
                 product: widget.product,
               ),
+              Divider(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                child: Text(
+                  'Rate The Product',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                child: RatingBar.builder(
+                  minRating: .5,
+
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (value) {
+                    print(value);
+                  },
+                  //itemSize: 20,
+                  allowHalfRating: true,
+                  initialRating: 0,
+                ),
+              ),
             ],
           ),
         ),
-        floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: OrderFooterButton(
-            text: 'Add To Order',
-            priceTxt: getTotalPrice().toString(),
-            onPress: () {
-              Navigator.of(context).pop(OrderItem(
-                product: widget.product,
-                quantity: ammount,
-                size: size,
-                options: options,
-                totalPrice: getTotalPrice(),
-              ));
-            },
-          ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: CartButtonsSection(
+          onPress: () {},
+        ),
       ),
     );
   }

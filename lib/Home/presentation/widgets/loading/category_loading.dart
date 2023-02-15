@@ -12,9 +12,10 @@ class CategoryLoadingWidget extends StatelessWidget {
       highlightColor: Colors.grey[100]!,
       enabled: true,
       child: GridView.count(
-            crossAxisCount: 6,
-            children: List.filled(6, CategoryLoadingCard()),
-          ),
-      );
+        padding: const EdgeInsets.all(12),
+        crossAxisCount: 2,
+        children: List.filled(6, CategoryLoadingCard()),
+      ),
+    );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:badges/badges.dart' as badge;
+import 'package:ecommerce/Cart/presentation/screens/cart_screen.dart';
+import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Shared/presentation/sliver_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -57,7 +59,33 @@ class HomeLoadedWidget extends StatelessWidget {
                   // top: 5,
                 ),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (_) => CartScreen(
+                          tempProducts: [
+                            Product(
+                              name: 'Product 1',
+                               desc: '',
+                                price: 300,
+                                 quantity: 2,
+                                  category: 'M',
+                                  images: [
+                                    'https://www.dubaiphone.net/web/image/product.product/2749/image_1024/Apple%20iPhone%2013%20Pro%20max%20With%20FaceTime%20-%20%28256GB%29%2C%206GB%20RAM%20%28Alpine%20Green%29?unique=95745b1'
+                                  ],
+                                  ),
+                            Product(
+                              name: 'Product 2',
+                               desc: '',
+                                price: 400,
+                                 quantity: 1,
+                                  category: 'M',
+                                  images: [
+                                    'https://www.dubaiphone.net/web/image/product.product/2749/image_1024/Apple%20iPhone%2013%20Pro%20max%20With%20FaceTime%20-%20%28256GB%29%2C%206GB%20RAM%20%28Alpine%20Green%29?unique=95745b1'
+                                  ],
+                                  ),
+                          ],
+                        )));
+                  },
                   icon: Icon(Icons.shopping_cart_rounded),
                   color: Theme.of(context).primaryColor,
                   iconSize: 30,

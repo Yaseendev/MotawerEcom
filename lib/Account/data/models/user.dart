@@ -20,12 +20,16 @@ class User {
   @HiveField(4)
   final String type;
 
+  // @HiveField(5)
+  // final List<dynamic> cart;
+
   User({
     required this.id,
     required this.name,
     required this.email,
     required this.address,
     required this.type,
+   // required this.cart,
   });
 
   Map<String, dynamic> toMap() => {
@@ -33,6 +37,7 @@ class User {
         'name': name,
         'address': address,
         'type': type,
+        //'cart': cart,
       };
 
   factory User.fromMap(Map<String, dynamic> map) {
@@ -41,7 +46,8 @@ class User {
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       address: map['address'] ?? '',
-      type: map['type'] ?? '',  
+      type: map['type'] ?? '',
+      //cart: List<Map<String, dynamic>>.from(map['cart']?.map((x) => Map<String, dynamic>.from(x))),
     );
   }
   String toJson() => json.encode(toMap());
