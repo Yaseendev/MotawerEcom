@@ -44,7 +44,7 @@ class CartItemCard extends StatelessWidget {
               title: Text(product.name),
               subtitle: Text('${product.price} EGP'),
               trailing: SizedBox(
-                width: 40,
+                width: 40 * 3,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -66,6 +66,37 @@ class CartItemCard extends StatelessWidget {
                             child: IconButton(
                               onPressed: () {},
                               icon: Icon(Icons.remove),
+                              alignment: Alignment.center,
+                              iconSize: 18,
+                              padding: EdgeInsets.zero,
+                              style: IconButton.styleFrom(
+                                alignment: Alignment.center,
+                                iconSize: 18,
+                                padding: EdgeInsets.zero,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 35,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black12,
+                                width: 1.5,
+                              ),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.zero,
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(product.quantity.toString()),
+                          ),
+                          Container(
+                            width: 35,
+                            height: 32,
+                            alignment: Alignment.center,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.add),
                               alignment: Alignment.center,
                               iconSize: 18,
                               padding: EdgeInsets.zero,
