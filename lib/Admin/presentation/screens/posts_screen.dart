@@ -29,7 +29,7 @@ class PostsScreen extends StatelessWidget {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     itemBuilder: (context, index) {
-                      return ProductAdminCard(product: state.products[index]                      );
+                      return ProductAdminCard(product: state.products[index]);
                     },
                   )
                 : Center(
@@ -69,6 +69,7 @@ class PostsScreen extends StatelessWidget {
                 //textColor: Colors.white,
                 fontSize: 16.0,
               );
+              context.read<ProductsBloc>().add(UpdateProducts(product));
             }
           });
         },

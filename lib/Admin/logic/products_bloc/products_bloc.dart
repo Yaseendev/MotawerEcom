@@ -18,10 +18,11 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         await adminRepository
             .fetchProducts()
             .then(
-                  (value) => value.fold(
+              (value) => value.fold(
                   (error) => emit(ProductsError(err: error.message)),
                   (result) => emit(ProductsFetched(products: result))),
-            ).onError((error, stackTrace) {
+            )
+            .onError((error, stackTrace) {
           print(error);
           emit(ProductsError(err: error.toString()));
         });
@@ -33,24 +34,37 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<DeleteAProduct>((event, emit) async {
       if (await connectivity.checkConnectivity() != ConnectivityResult.none) {
         final tempList = (state as ProductsFetched).products;
-        emit(ProductsDeleting(productToDelete: event.productId));        
+        emit(ProductsDeleting(productToDelete: event.productId));
         await adminRepository
             .deleteProduct(event.productId)
             .then(
               (value) => value.fold(
                 (error) => emit(ProductsError(err: error.message)),
                 (_) {
-                  tempList.removeWhere((element) => element.id == event.productId);
+                  tempList
+                      .removeWhere((element) => element.id == event.productId);
                   forceUpdate = !forceUpdate;
-                  emit(ProductsFetched(products: tempList, forceFlag: forceUpdate,));
+                  emit(ProductsFetched(
+                    products: tempList,
+                    forceFlag: forceUpdate,
+                  ));
                 },
               ),
-            ).onError((error, stackTrace) {
+            )
+            .onError((error, stackTrace) {
           print(error);
           emit(ProductsError(err: error.toString()));
         });
       } else {
         emit(ProductsNoInternet());
+      }
+    });
+
+    on<UpdateProducts>((event, emit) async {
+      if (state is ProductsFetched) {
+        final temp = List<Product>.from((state as ProductsFetched).products);
+        temp.insert(0, event.product);
+        emit(ProductsFetched(products: temp));
       }
     });
   }
