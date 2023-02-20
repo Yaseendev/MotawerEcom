@@ -2,7 +2,10 @@ import 'package:ecommerce/Home/presentation/widgets/loaded/home_loaded_content.d
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final Function(String term) onSearch;
+  const HomeScreen({Key? key,
+  required this.onSearch,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,9 @@ class HomeScreen extends StatelessWidget {
         child: SafeArea(
             child: Padding(
           padding: const EdgeInsets.only(top: 18.0),
-          child: HomeLoadedWidget(),
+          child: HomeLoadedWidget(
+            onSearch: onSearch,
+          ),
         )),
         //  ListView(
         //   physics: NeverScrollableScrollPhysics(),

@@ -1,4 +1,5 @@
 import 'package:ecommerce/Account/presentation/screens/account_screen.dart';
+import 'package:ecommerce/Search/presentation/screens/search_screen.dart';
 import 'package:fancy_bar/fancy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/Home/presentation/screens/home_screen.dart';
@@ -13,13 +14,21 @@ class PrimaryScreen extends StatefulWidget {
 class _PrimaryScreenState extends State<PrimaryScreen> {
   int _currentIndex = 0;
   List<Widget> _pages = [];
-
+  String? searchTerm;
+  final GlobalKey<FancyBottomBarState> _key = GlobalKey<FancyBottomBarState>();
   @override
   void initState() {
     _pages.addAll([
-      const HomeScreen(),
+      HomeScreen(onSearch: (term) {
+        _pages.replaceRange(2, 3, [SearchScreen(searchTerm: term)]);
+      
+        _key.currentState!.setItem(2);
+        setState(() {
+          _currentIndex = 2;
+        });
+      }),
       Container(),
-      Container(),
+      SearchScreen(searchTerm: searchTerm),
       const AccountScreen(),
     ]);
     super.initState();
@@ -34,6 +43,8 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
         child: _pages[_currentIndex],
       ),
       bottomNavigationBar: FancyBottomBar(
+        key: _key,
+        selectedIndex: _currentIndex,
         type: FancyType.FancyV1,
         items: [
           FancyItem(

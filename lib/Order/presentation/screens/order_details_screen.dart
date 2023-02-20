@@ -3,9 +3,17 @@ import 'package:ecommerce/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
-class OrderDetailsScreen extends StatelessWidget {
+import '../widgets/order_product_tile.dart';
+
+class OrderDetailsScreen extends StatefulWidget {
   const OrderDetailsScreen({super.key});
 
+  @override
+  State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
+}
+
+class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  int currentStep = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +52,11 @@ class OrderDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Order Date:      ${intl.DateFormat().format(
+                  Text('Order Date:    ${intl.DateFormat().format(
                     DateTime.now(),
                   )}'),
-                  Text('Order ID:          widget.order.id'),
-                  Text('Order Total:      \$widget.order.totalPrice'),
+                  Text('Order ID:         widget.order.id'),
+                  Text('Order Total:    \$widget.order.totalPrice'),
                 ],
               ),
             ),
@@ -69,54 +77,7 @@ class OrderDetailsScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(10)),
-                          child: CachedNetworkImage(
-                            fit: BoxFit.fill,
-                            imageUrl:
-                                'https://m.media-amazon.com/images/I/61UY5LzzA0L._AC_UF1000,1000_QL80_.jpg',
-                            height: 75,
-                            width: 100,
-                            placeholder: (context, url) => Image.asset(
-                              'assets/images/placeholder.jpg',
-                              height: 75,
-                              width: 100,
-                            ),
-                            errorWidget: (context, url, error) => Image.asset(
-                              'assets/images/placeholder.jpg',
-                              height: 75,
-                              width: 100,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Product 1',
-                              style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              'Qty: 2',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  OrderProductTile(),
                 ],
               ),
             ),
@@ -135,7 +96,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 ),
               ),
               child: Stepper(
-                // currentStep: currentStep,
+                currentStep: currentStep,
                 controlsBuilder: (context, details) {
                   // if (user.type == 'admin') {
                   //   return CustomButton(
@@ -151,32 +112,40 @@ class OrderDetailsScreen extends StatelessWidget {
                     content: const Text(
                       'Your order is yet to be delivered',
                     ),
-                    isActive: true,
-                    state: StepState.indexed,
+                    isActive: currentStep >= 0,
+                    state: currentStep > 0
+                        ? StepState.complete
+                        : StepState.indexed,
                   ),
                   Step(
                     title: const Text('Completed'),
                     content: const Text(
                       'Your order has been delivered, you are yet to sign.',
                     ),
-                    isActive: false,
-                    state: StepState.complete,
+                    isActive: currentStep >= 1,
+                    state: currentStep <= 1
+                        ? StepState.indexed
+                        : StepState.complete,
                   ),
                   Step(
                     title: const Text('Received'),
                     content: const Text(
                       'Your order has been delivered and signed by you.',
                     ),
-                    isActive: false,
-                    state: StepState.complete,
+                    isActive: currentStep >= 2,
+                    state: currentStep <= 2
+                        ? StepState.indexed
+                        : StepState.complete,
                   ),
                   Step(
                     title: const Text('Delivered'),
                     content: const Text(
                       'Your order has been delivered and signed by you!',
                     ),
-                    isActive: false,
-                    state: StepState.complete,
+                    isActive: currentStep == 3,
+                    state: currentStep == 3
+                        ? StepState.complete
+                        : StepState.indexed,
                   ),
                 ],
               ),

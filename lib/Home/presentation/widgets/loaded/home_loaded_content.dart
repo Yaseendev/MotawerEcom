@@ -12,8 +12,10 @@ import 'photos_section.dart';
 import '../../../../Search/presentation/widgets/search_box.dart';
 
 class HomeLoadedWidget extends StatelessWidget {
+  final Function(String term) onSearch;
   const HomeLoadedWidget({
     Key? key,
+    required this.onSearch,
   }) : super(key: key);
 
   @override
@@ -30,7 +32,9 @@ class HomeLoadedWidget extends StatelessWidget {
           toolbarHeight: 50,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: SearchBox(
-            onPress: (value) {},
+            onPress: (value) {
+              onSearch(value);
+            },
           ),
           actions: [
             Padding(
@@ -60,31 +64,31 @@ class HomeLoadedWidget extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => CartScreen(
-                          tempProducts: [
-                            Product(
-                              name: 'Product 1',
-                               desc: '',
-                                price: 300,
-                                 quantity: 2,
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => CartScreen(
+                              tempProducts: [
+                                Product(
+                                  name: 'Product 1',
+                                  desc: '',
+                                  price: 300,
+                                  quantity: 2,
                                   category: 'M',
                                   images: [
                                     'https://www.dubaiphone.net/web/image/product.product/2749/image_1024/Apple%20iPhone%2013%20Pro%20max%20With%20FaceTime%20-%20%28256GB%29%2C%206GB%20RAM%20%28Alpine%20Green%29?unique=95745b1'
                                   ],
-                                  ),
-                            Product(
-                              name: 'Product 2',
-                               desc: '',
-                                price: 400,
-                                 quantity: 1,
+                                ),
+                                Product(
+                                  name: 'Product 2',
+                                  desc: '',
+                                  price: 400,
+                                  quantity: 1,
                                   category: 'M',
                                   images: [
                                     'https://www.dubaiphone.net/web/image/product.product/2749/image_1024/Apple%20iPhone%2013%20Pro%20max%20With%20FaceTime%20-%20%28256GB%29%2C%206GB%20RAM%20%28Alpine%20Green%29?unique=95745b1'
                                   ],
-                                  ),
-                          ],
-                        )));
+                                ),
+                              ],
+                            )));
                   },
                   icon: Icon(Icons.shopping_cart_rounded),
                   color: Theme.of(context).primaryColor,

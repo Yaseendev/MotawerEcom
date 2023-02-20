@@ -2,6 +2,7 @@ import 'package:custom_text/custom_text.dart';
 import 'package:ecommerce/Account/blocs/account_bloc/account_bloc.dart';
 import 'package:ecommerce/Admin/presentation/screens/admin_screen.dart';
 import 'package:ecommerce/Primary/presentation/screens/primary_screen.dart';
+import 'package:ecommerce/Search/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -40,9 +41,12 @@ class _SignupScreenState extends State<SignupScreen> {
           ));
         } else if (state is AccountLoggedIn) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (_) => state.user.type == 'admin'
-                  ? AdminScreen()
-                  : PrimaryScreen()));
+              builder: (_) => BlocProvider<SearchBloc>(
+                    create: (context) => SearchBloc(),
+                    child: state.user.type == 'admin'
+                        ? AdminScreen()
+                        : PrimaryScreen(),
+                  )));
         }
       },
       child: Scaffold(
@@ -84,7 +88,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                 onPressed: () {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                          builder: (_) => PrimaryScreen()));
+                                          builder: (_) =>
+                                              BlocProvider<SearchBloc>(
+                                                create: (context) =>
+                                                    SearchBloc(),
+                                                child: PrimaryScreen(),
+                                              )));
                                 },
                                 child: Text('Continue as a visitor'),
                                 style: TextButton.styleFrom(
@@ -145,9 +154,13 @@ class _SignupScreenState extends State<SignupScreen> {
                               SizedBox(height: 20),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (_) => PrimaryScreen()));
+                                  Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(
+                                          builder: (_) => BlocProvider<SearchBloc>(
+                                                create: (context) =>
+                                                    SearchBloc(),
+                                                child: PrimaryScreen(),
+                                              )));
                                 },
                                 child: Text('Continue as a visitor'),
                                 style: TextButton.styleFrom(

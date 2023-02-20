@@ -75,6 +75,7 @@ class _AdminScreenState extends State<AdminScreen> {
         child: _pages[_currentIndex],
       ),
       bottomNavigationBar: FancyBottomBar(
+        selectedIndex: _currentIndex,
         type: FancyType.FancyV1,
         items: [
           FancyItem(

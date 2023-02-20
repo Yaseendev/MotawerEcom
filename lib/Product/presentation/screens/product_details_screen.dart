@@ -95,11 +95,25 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             ? Colors.transparent
                             : AppColors.PRIMARY_COLOR,
                         customizedBanners: [
-                          ...widget.product.images.map((e) => Image.network(
-                                e,
+                          ...widget.product.images.map((e) =>
+                              CachedNetworkImage(
+                                fit: BoxFit.fill,
+                                imageUrl: e,
                                 height: MediaQuery.of(context).size.height * .5,
                                 width: double.infinity,
-                                fit: BoxFit.fill,
+                                placeholder: (context, url) => Image.asset(
+                                  'assets/images/placeholder.jpg',
+                                  height:
+                                      MediaQuery.of(context).size.height * .5,
+                                  width: double.infinity,
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                  'assets/images/placeholder.jpg',
+                                  height:
+                                      MediaQuery.of(context).size.height * .5,
+                                  width: double.infinity,
+                                ),
                               )),
                         ],
                       ),

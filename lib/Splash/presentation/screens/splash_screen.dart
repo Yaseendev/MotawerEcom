@@ -3,6 +3,7 @@ import 'package:ecommerce/Account/presentation/screens/login_screen.dart';
 import 'package:ecommerce/Admin/logic/products_bloc/products_bloc.dart';
 import 'package:ecommerce/Admin/presentation/screens/admin_screen.dart';
 import 'package:ecommerce/Primary/presentation/screens/primary_screen.dart';
+import 'package:ecommerce/Search/bloc/search_bloc.dart';
 import 'package:ecommerce/Splash/blocs/bloc/initroute_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,13 +39,15 @@ class SplashScreen extends StatelessWidget {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   settings: RouteSettings(name: '/primary'),
                   builder: (ctx) {
-                    return state.user.type == 'admin'
-                        ? BlocProvider<ProductsBloc>(
+                    return BlocProvider<SearchBloc>(
+                      create: (context) => SearchBloc(),
+                      child: state.user.type == 'admin' ? BlocProvider<ProductsBloc>(
                             create: (context) =>
                                 ProductsBloc()..add(FetchProducts()),
                             child: AdminScreen(),
                           )
-                        : PrimaryScreen();
+                        : PrimaryScreen(),
+                    );
                   }));
             }
           },
