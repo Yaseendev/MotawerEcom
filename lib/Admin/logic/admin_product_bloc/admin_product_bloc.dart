@@ -5,26 +5,28 @@ import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Utils/locator.dart';
 import 'package:equatable/equatable.dart';
 
-part 'product_event.dart';
-part 'product_state.dart';
+part 'admin_product_event.dart';
+part 'admin_product_state.dart';
 
-class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  ProductBloc() : super(ProductInitial()) {
+class AdminProductBloc extends Bloc<AdminProductEvent, AdminProductState> {
+  AdminProductBloc() : super(AdminProductInitial()) {
     final Connectivity connectivity = locator.get<Connectivity>();
     final AdminRepository adminRepository = locator.get<AdminRepository>();
     on<SellProduct>((event, emit) async {
       if (await connectivity.checkConnectivity() != ConnectivityResult.none) {
-        emit(ProductLoading());
-        await adminRepository.postProduct(event.product).then(
-          (value) => value.fold(
-           (l) => emit(ProductError(l.message)),
-           (r) => emit(ProductPosted(r))),
-          ).onError((error, stackTrace) {
+        emit(AdminProductLoading());
+        await adminRepository
+            .postProduct(event.product)
+            .then(
+              (value) => value.fold((l) => emit(AdminProductError(l.message)),
+                  (r) => emit(AdminProductPosted(r))),
+            )
+            .onError((error, stackTrace) {
           print(error);
-          emit(ProductError(error.toString()));
+          emit(AdminProductError(error.toString()));
         });
       } else {
-        emit(ProductNoInternet());
+        emit(AdminProductNoInternet());
       }
     });
   }

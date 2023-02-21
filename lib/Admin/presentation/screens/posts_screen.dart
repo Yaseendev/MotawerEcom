@@ -1,4 +1,4 @@
-import 'package:ecommerce/Admin/logic/product_bloc/product_bloc.dart';
+import 'package:ecommerce/Admin/logic/admin_product_bloc/admin_product_bloc.dart';
 import 'package:ecommerce/Admin/logic/products_bloc/products_bloc.dart';
 import 'package:ecommerce/Utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +54,8 @@ class PostsScreen extends StatelessWidget {
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(
-                  builder: (ctx) => BlocProvider<ProductBloc>(
-                        create: (context) => ProductBloc(),
+                  builder: (ctx) => BlocProvider<AdminProductBloc>(
+                        create: (context) => AdminProductBloc(),
                         child: AddProductScreen(),
                       )))
               .then((product) {

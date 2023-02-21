@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/Product/bloc/product_bloc.dart';
 import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Product/presentation/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SearchResultTile extends StatelessWidget {
@@ -15,8 +17,11 @@ class SearchResultTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => ProductDetailsScreen(
-                product: product,
+          builder: (_) => BlocProvider<ProductBloc>(
+                create: (context) => ProductBloc(product),
+                child: ProductDetailsScreen(
+                  product: product,
+                ),
               ))),
       child: Card(
         shape: RoundedRectangleBorder(
@@ -39,19 +44,21 @@ class SearchResultTile extends StatelessWidget {
                       height: 90,
                       placeholder: (context, url) => Image.asset(
                         'assets/images/placeholder.jpg',
-                        width: 70,
-                        height: 80,
+                        width: 100,
+                        height: 90,
                       ),
                       errorWidget: (context, url, error) => Image.asset(
                         'assets/images/placeholder.jpg',
-                        width: 70,
-                        height: 80,
+                        width: 100,
+                        height: 90,
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           width: 235,
@@ -64,16 +71,20 @@ class SearchResultTile extends StatelessWidget {
                             maxLines: 2,
                           ),
                         ),
-                        RatingBar.builder(
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: RatingBar.builder(
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (value) {},
+                            itemSize: 20,
+                            allowHalfRating: true,
+                            ignoreGestures: true,
+                            initialRating:
+                                4, //TODO: add rating to product model
                           ),
-                          onRatingUpdate: (value) {},
-                          itemSize: 20,
-                          allowHalfRating: true,
-                          ignoreGestures: true,
-                          initialRating: 4, //TODO: add rating to product model
                         ),
                         Container(
                           width: 235,

@@ -1,11 +1,13 @@
 import 'package:badges/badges.dart' as badge;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/Product/bloc/product_bloc.dart';
 import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Product/presentation/screens/product_details_screen.dart';
 import 'package:ecommerce/Search/data/repositories/search_repo.dart';
 import 'package:ecommerce/Utils/constants.dart';
 import 'package:ecommerce/Utils/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../screens/search_screen.dart';
@@ -115,8 +117,11 @@ class _SearchBoxState extends State<SearchBox> {
         },
         onSuggestionSelected: (Product suggestion) {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => ProductDetailsScreen(
-                    product: suggestion,
+              builder: (_) => BlocProvider<ProductBloc>(
+                    create: (context) => ProductBloc(suggestion),
+                    child: ProductDetailsScreen(
+                      product: suggestion,
+                    ),
                   )));
         },
       ),

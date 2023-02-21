@@ -31,6 +31,7 @@ class Urls {                    //<Your_ip_address>
   static const String DELETE_PRODUCT = BASE_API + '/admin/delete-product';
   static const String GET_CATEGORY = BASE_API + '/products';
   static const String SEARCH_PRODUCT = BASE_API + '/products/search';
+  static const String RATE_PRODUCT = BASE_API + '/rate-product';
 }
 
 class Boxes {

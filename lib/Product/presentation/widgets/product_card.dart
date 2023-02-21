@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/Product/bloc/product_bloc.dart';
 import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../screens/product_details_screen.dart';
 
 class ProductCard extends StatelessWidget {
@@ -13,9 +15,13 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailsScreen(
-         product: product,
-      ))),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => BlocProvider<ProductBloc>(
+                create: (context) => ProductBloc(product),
+                child: ProductDetailsScreen(
+                  product: product,
+                ),
+              ))),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

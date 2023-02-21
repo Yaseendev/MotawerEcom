@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'rating.dart';
+
 class Product {
   final String name;
   final String desc;
@@ -9,6 +11,7 @@ class Product {
   final List<String> images;
   final String? id;
   //final String? userId;
+  final List<Rating>? ratings;
 
   Product({
     required this.name,
@@ -18,6 +21,7 @@ class Product {
     required this.category,
     this.images = const [],
     this.id,
+    this.ratings,
     //this.userId,
   });
 
@@ -51,6 +55,7 @@ class Product {
       'quantity': quantity,
       'category': category,
       'images': images,
+      'rating': ratings,
     };
   }
 
@@ -65,11 +70,19 @@ class Product {
       images: (map['images'] as List<dynamic>)
           .map((image) => image.toString())
           .toList(),
+      ratings: map['ratings'] != null
+          ? List<Rating>.from(map['ratings']?.map((x) => Rating.fromMap(x)))
+          : null,
     );
   }
 
+  double? get getTotalRating {
+    const num initval = 0;
+    
+    return (ratings != null ? ratings!.fold(initval, (previousValue, element) => element.rating + double.parse(previousValue.toString())) : 0) / (ratings != null && ratings!.isNotEmpty ? ratings!.length : 1);}
+
   String toJson() => json.encode(toMap());
- 
+
   factory Product.fromJson(String source) =>
       Product.fromMap(json.decode(source) as Map<String, dynamic>);
 

@@ -8,12 +8,21 @@ abstract class ProductEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SellProduct extends ProductEvent {
+class RateProduct extends ProductEvent {
+  final double rate;
   final Product product;
-  SellProduct({
+
+  RateProduct({
+    required this.rate,
     required this.product,
   });
-  
+
   @override
-  List<Object> get props => [product];
+  List<Object> get props => [product, rate];
+}
+
+class GetProductData extends ProductEvent {
+
+  @override
+  List<Object> get props => [];
 }

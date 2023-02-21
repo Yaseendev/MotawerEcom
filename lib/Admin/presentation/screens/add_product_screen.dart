@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:banner_carousel/banner_carousel.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:ecommerce/Admin/logic/product_bloc/product_bloc.dart';
+import 'package:ecommerce/Admin/logic/admin_product_bloc/admin_product_bloc.dart';
 import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Shared/presentation/widgets/custom_button.dart';
 import 'package:ecommerce/Shared/presentation/widgets/custom_text_field.dart';
@@ -56,9 +56,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProductBloc, ProductState>(
+    return BlocListener<AdminProductBloc, AdminProductState>(
       listener: (context, state) {
-        if (state is ProductPosted) {
+        if (state is AdminProductPosted) {
           Navigator.of(context).pop(state.product);
         }
       },
@@ -176,15 +176,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                BlocBuilder<ProductBloc, ProductState>(
+                BlocBuilder<AdminProductBloc, AdminProductState>(
                   builder: (context, state) {
                     return CustomButton(
                       text: 'Post',
-                      isLoading: state is ProductLoading,
+                      isLoading: state is AdminProductLoading,
                       onTap: () {
+                        FocusScope.of(context).unfocus();
                         if (_addProductFormKey.currentState!.validate() &&
                             images.isNotEmpty) {
-                          context.read<ProductBloc>().add(SellProduct(
+                          context.read<AdminProductBloc>().add(SellProduct(
                                   product: Product(
                                 name: productNameController.text,
                                 desc: descriptionController.text,

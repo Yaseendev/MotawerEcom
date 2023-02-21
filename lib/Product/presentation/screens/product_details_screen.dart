@@ -1,12 +1,16 @@
 import 'package:banner_carousel/banner_carousel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/Product/bloc/product_bloc.dart';
 import 'package:ecommerce/Product/data/models/product.dart';
 import 'package:ecommerce/Utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../widgets/cart_buttons_section.dart';
 import '../widgets/description_section.dart';
+import '../widgets/rating_loading.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final Product product;
@@ -144,19 +148,29 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                child: RatingBar.builder(
-                  minRating: .5,
+                child: BlocBuilder<ProductBloc, ProductState>(
+                  builder: (context, state) {
+                    if(state is ProductReady) {
+                    return RatingBar.builder(
+                      minRating: .5,
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (value) {
+                        print(value);
+                        context.read<ProductBloc>().add(RateProduct(
+                            rate: value, product: widget.product));
+                      },
+                      //itemSize: 20,
+                      allowHalfRating: true,
+                      initialRating: 0,
+                    );
+                      
+                    }
+                    return RatingLoading();
 
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  onRatingUpdate: (value) {
-                    print(value);
                   },
-                  //itemSize: 20,
-                  allowHalfRating: true,
-                  initialRating: 0,
                 ),
               ),
             ],

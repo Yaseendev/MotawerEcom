@@ -1,8 +1,10 @@
 import 'package:ecommerce/Account/presentation/screens/account_screen.dart';
+import 'package:ecommerce/Search/bloc/search_bloc.dart';
 import 'package:ecommerce/Search/presentation/screens/search_screen.dart';
 import 'package:fancy_bar/fancy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce/Home/presentation/screens/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PrimaryScreen extends StatefulWidget {
   const PrimaryScreen({Key? key}) : super(key: key);
@@ -21,7 +23,8 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
     _pages.addAll([
       HomeScreen(onSearch: (term) {
         _pages.replaceRange(2, 3, [SearchScreen(searchTerm: term)]);
-      
+
+        context.read<SearchBloc>().add(FetchSearchData(searchTxt: term));
         _key.currentState!.setItem(2);
         setState(() {
           _currentIndex = 2;

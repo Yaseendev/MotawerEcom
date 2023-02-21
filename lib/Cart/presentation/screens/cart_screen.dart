@@ -10,7 +10,7 @@ class CartScreen extends StatelessWidget {
     super.key,
     required this.tempProducts,
   });
-
+  static const num _initVal = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,10 +56,11 @@ class CartScreen extends StatelessWidget {
                   TextSpan(
                     text: tempProducts
                             .fold(
-                                0,
+                                _initVal,
                                 (previousValue, element) =>
-                                    (previousValue as num) +
-                                    (element.price * element.quantity))
+                                    num.parse(previousValue.toString()) +
+                                    (num.parse(element.price.toString()) *
+                                        int.parse(element.quantity.toString())))
                             .toString() +
                         ' EGP',
                     style: TextStyle(
