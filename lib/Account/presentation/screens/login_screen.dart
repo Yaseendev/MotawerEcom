@@ -5,6 +5,7 @@ import 'package:ecommerce/Primary/presentation/screens/primary_screen.dart';
 import 'package:ecommerce/Search/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:sizer/sizer.dart';
 import '../widgets/account_button.dart';
@@ -63,6 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      SizedBox(height: 16),
                       Center(
                         child: CircleAvatar(
                           radius: 45.sp,
@@ -80,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 60),
+                      SizedBox(height: 40),
                       Expanded(
                         child: SingleChildScrollView(
                           child: Form(
@@ -166,6 +168,86 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                 ),
                                 SizedBox(height: 20),
+                                Row(
+                                  children: [
+                                    Expanded(child: Divider()),
+                                    Text('  Or Continue With  '),
+                                    Expanded(child: Divider()),
+                                  ],
+                                ),
+                                SizedBox(height: 15),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton.icon(
+                                        onPressed: () async {
+                                          // context.read<AccountBloc>().add(LoginWithGoogleEvent());
+                                        },
+                                        icon:
+                                            //     CircularProgressIndicator.adaptive(
+                                            //   backgroundColor: Colors.white,
+                                            // ),
+                                            Icon(
+                                          FontAwesomeIcons.google,
+                                          color: Colors.white,
+                                        ),
+                                        label: Text(
+                                          'Google',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Color(0xFFE6242E)),
+                                          padding: MaterialStateProperty.all(
+                                              const EdgeInsets.all(16)),
+                                          shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                          )),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Expanded(
+                                      child: ElevatedButton.icon(
+                                        onPressed: () {
+                                          //context.read<AccountBloc>().add(LoginWithFacebookEvent());
+                                        },
+                                        icon: Icon(
+                                          FontAwesomeIcons.facebookF,
+                                          color: Colors.white,
+                                        ),
+                                        label: Text(
+                                          'Facebook',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Color(0xFF4267B2)),
+                                          padding: MaterialStateProperty.all(
+                                              EdgeInsets.all(16)),
+                                          shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                          )),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
                                 TextButton(
                                   onPressed: () {
                                     printInfo(info: 'Continue');
@@ -183,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     splashFactory: NoSplash.splashFactory,
                                   ),
                                 ),
-                                SizedBox(height: 40),
+                                SizedBox(height: 30),
                                 CustomText(
                                   'Don\'t have an account?  [Sign Up]()',
                                   definitions: [
@@ -308,14 +390,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                 ),
                                 SizedBox(height: 20),
+                                Row(
+                                  children: [
+                                    Expanded(child: Divider()),
+                                    Text('Or Continue With'),
+                                    Expanded(child: Divider()),
+                                  ],
+                                ),
                                 TextButton(
                                   onPressed: () {
                                     printInfo(info: 'Continue');
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
-                                            builder: (_) => BlocProvider<
-                                                    SearchBloc>(
-                                                      create: (context) => SearchBloc(),
+                                            builder: (_) =>
+                                                BlocProvider<SearchBloc>(
+                                                  create: (context) =>
+                                                      SearchBloc(),
                                                   child: PrimaryScreen(),
                                                 )));
                                   },
